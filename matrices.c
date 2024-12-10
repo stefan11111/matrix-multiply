@@ -12,6 +12,7 @@ typedef struct matrix_vector {
 int* matrix_multiply (const int *A, int A_size_1, int A_size_2, const int *B, int B_size_1, int B_size_2)
 {
     int *result = malloc(A_size_1 * B_size_2 * sizeof(int));
+
     if (!result) {
         printf("Out of memory\n");
         return 0;
@@ -29,7 +30,7 @@ int* matrix_multiply (const int *A, int A_size_1, int A_size_2, const int *B, in
             for(k = 0; k < size; k++) {
                 sum += A[A_size_2 * i + k] * B[k * B_size_2 + j];
             }
-            result[A_size_2 * i + j] = sum;
+            result[B_size_2 * i + j] = sum;
         }
     }
     return result;
@@ -114,6 +115,7 @@ int main(int argc, char **argv)
             scanf("%99s", filename);
             f = fopen(filename, "r");
             if (!f) {
+                printf("Could not open file for reading. Falling back to stdin.\n");
                 f = stdin;
             }
         }
@@ -218,8 +220,8 @@ int main(int argc, char **argv)
     for (int k = 0; k < x; k++) {
         if (f == stdin)
         printf("Enter elements of the %d'th matrix\n", k + 1);
-        for (int i = 0; i < n1; i++) {
-            for (int j = 0; j < m1; j++) {
+        for (int i = 0; i < n2; i++) {
+            for (int j = 0; j < m2; j++) {
                  fscanf(f, "%d", &vec2.matrices[k][m2 * i + j]);
             }
         }
